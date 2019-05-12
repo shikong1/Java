@@ -1,3 +1,5 @@
+server:
+  port: 8089
 spring:
   datasource:
     #连接MySQL
@@ -5,11 +7,22 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    #最大等待链接中的数量，设0为没有限制
+    #最大等待毫秒数，单位ms，超过时间会出错误信息
+    #数据库链接池初始化链接数
+    tomcat:
+      max-idle: 10
+      max-wait: 10000
+      initial-size: 5
+
 
 mybatis:
   configuration:
    #配置项：开启下划线到驼峰的自动转换. 作用：将数据库字段根据驼峰规则自动注入到对象属性。
    map-underscore-to-camel-case: true
+  #config-location: classpath:mybatis/mybatis.cfg.xml
+  mapper-locations: classpath:com/springboot/chapter6/mapper/*.xml
+  type-aliases-package: com.springboot.chapter6.pojo
 
 logging:
   level:
@@ -21,3 +34,4 @@ pagehelper:
   support-methods-arguments: true
   params: count==countSql
   page-size-zero: true
+

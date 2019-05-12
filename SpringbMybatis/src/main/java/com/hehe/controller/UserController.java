@@ -5,10 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.hehe.mapper.UserMapper;
 import com.hehe.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Transactional
 @RestController
 //@RequestMapping("/user/*")
 @RequestMapping("/user/*")
@@ -24,7 +26,7 @@ public class UserController {
     @GetMapping("findAllByPage")
     public PageInfo<User> findAll(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);//改写语句实现分页查询
-        List<User> all = userMapper.findALL();
+        List<User> all = userMapper.findALL();//拦截器对请求进行拦截
         System.out.println(all.toString());
         PageInfo<User> info = new PageInfo<>(all);
         return info;
@@ -42,7 +44,7 @@ public class UserController {
         return userMapper.list();
     }
 
-
+/*查询所有记*/
     @GetMapping("list")
     public List<User> list() {
         return userMapper.list();
